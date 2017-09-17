@@ -1,0 +1,8 @@
+{
+  "short_name": "Author short name",
+  "author_name": "Author name",
+  "author_url": "Author URL",
+  "access_token": "Access token",
+  "auth_url": "Auth URL",
+  "page_count": 50
+}
