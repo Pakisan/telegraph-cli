@@ -1,0 +1,34 @@
+[
+  {
+    "tag": "p",
+    "children": [
+      "text content",
+      {
+        "tag": "a",
+        "attrs": {
+          "href": "https://m.habrahabr.ru/post/335876/",
+          "target": "_blank"
+        },
+        "children": [
+          "https://m.habrahabr.ru/post/335876/"
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "p",
+    "children": [
+      "text content",
+      {
+        "tag": "a",
+        "attrs": {
+          "href": "https://m.habrahabr.ru/post/335876/",
+          "target": "_blank"
+        },
+        "children": [
+          "https://m.habrahabr.ru/post/335876/"
+        ]
+      }
+    ]
+  }
+]
