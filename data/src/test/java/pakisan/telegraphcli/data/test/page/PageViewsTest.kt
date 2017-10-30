@@ -35,7 +35,7 @@ import kotlin.test.assertEquals
 class PageViewsTest {
 
     @Test
-    fun pageViewsSerialization() {
+    fun pageViewsDeserialization() {
         val gson = Gson()
         val pageViewsAsJson = FileReader(AccountTest::class.java.getResource("/pageViews.json").path)
         val pageViewsFromJson = gson.fromJson(pageViewsAsJson, PageViews::class.java)
@@ -45,7 +45,7 @@ class PageViewsTest {
     }
 
     @Test
-    fun pageViewsDeserialization() {
+    fun pageViewsSerialization() {
         val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
                 PageViewsTest::class.java.getResource("/pageViews.json").path))
@@ -56,7 +56,7 @@ class PageViewsTest {
     }
 
     @Test
-    fun gPageViewsSerialization() {
+    fun gPageViewsDeserialization() {
         val gson = Gson()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
                 PageViewsTest::class.java.getResource("/pageViews.json").path))
@@ -70,7 +70,7 @@ class PageViewsTest {
 
 
     @Test
-    fun gPageViewsDeserialization() {
+    fun gPageViewsSerialization() {
         val gson = Gson()
         val json = FileReader(PageViewsTest::class.java.getResource("/pageViews.json").path)
         val pageViewsAsJson = gson.toJson(gson.fromJson(json, PageViews::class.java))

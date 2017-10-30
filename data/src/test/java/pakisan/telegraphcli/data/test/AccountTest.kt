@@ -47,7 +47,7 @@ class AccountTest {
     }
 
     @Test
-    fun accountSerialization() {
+    fun accountDeserialization() {
         val gson = Gson()
         val accountAsJson = FileReader(AccountTest::class.java.getResource("/account/account.json").path)
         val accountFromJson = gson.fromJson(accountAsJson, Account::class.java)
@@ -64,7 +64,7 @@ class AccountTest {
     }
 
     @Test
-    fun accountDeserialization() {
+    fun accountSerialization() {
         val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
                 AccountTest::class.java.getResource("/account/account.json").path))
@@ -82,7 +82,7 @@ class AccountTest {
     }
 
     @Test
-    fun gAccountSerialization() {
+    fun gAccountDeserialization() {
         val gson = Gson()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
                 AccountTest::class.java.getResource("/account/account.json").path))
@@ -96,7 +96,7 @@ class AccountTest {
 
 
     @Test
-    fun gAccountDeserialization() {
+    fun gAccountSerialization() {
         val gson = Gson()
         val json = FileReader(AccountTest::class.java.getResource("/account/account.json").path)
         val accountAsJson = gson.toJson(gson.fromJson(json, Account::class.java))

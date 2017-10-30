@@ -36,7 +36,7 @@ import kotlin.test.assertEquals
 class PageListTest {
 
     @Test
-    fun pageListSerialization() {
+    fun pageListDeserialization() {
         val gson = Gson()
         val pageListAsJson = FileReader(AccountTest::class.java.getResource("/pageList/singlePageList.json").path)
         val pageListFromJson = gson.fromJson(pageListAsJson, PageList::class.java)
@@ -54,7 +54,7 @@ class PageListTest {
     }
 
     @Test
-    fun pageListDeserialization() {
+    fun pageListSerialization() {
         val gson = GsonBuilder().setPrettyPrinting().create()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
                 PageListTest::class.java.getResource("/pageList/singlePageList.json").path))
@@ -73,7 +73,7 @@ class PageListTest {
     }
 
     @Test
-    fun gPageListSerialization() {
+    fun gPageListDeserialization() {
         val gson = Gson()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
                 PageListTest::class.java.getResource("/pageList/pageList.json").path))
@@ -87,7 +87,7 @@ class PageListTest {
 
 
     @Test
-    fun gPageListDeserialization() {
+    fun gPageListSerialization() {
         val gson = Gson()
         val json = FileReader(PageListTest::class.java.getResource("/pageList/singlePageList.json").path)
         val pageListAsJson = gson.toJson(gson.fromJson(json, PageList::class.java))

@@ -21,7 +21,6 @@
 
 package pakisan.telegraphcli.data.gson.data
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import pakisan.telegraphcli.data.gson.NodeDeserializer
@@ -31,7 +30,7 @@ import pakisan.telegraphcli.data.response.Response
 import java.lang.reflect.Type
 
 /**
- * Serialize [Account] to json or Deserialize it from last.
+ * Serialize [Response] to json or Deserialize it from last.
  */
 object GResponse {
 
