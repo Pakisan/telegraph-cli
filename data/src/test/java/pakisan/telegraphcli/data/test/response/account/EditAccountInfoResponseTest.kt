@@ -32,41 +32,40 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertEquals
 
-class CreateAccountResponseTest {
+class EditAccountInfoResponseTest {
 
-    private val createAccountResponseType = object: TypeToken<Response<Account>>(){}.type
+    private val editAccountInfoResponseType = object: TypeToken<Response<Account>>(){}.type
 
     val account = Account(
             "Sandbox",
             "Anonymous",
             "",
             "ca90f944adb2b8f7f4f9d07c4cf6aae72af4461cc252cbcfad4a2d9aeabd",
-            "https://edit.telegra.ph/auth/XjB2sC7FZYSzFu3h61HigkGFqjNJLxpGR0HhDOVAKN",
-            0
+            pageCount = 0
     )
 
     @Test
-    fun createAccountResponseDeserializationTest() {
+    fun editAccountInfoResponseDeserializationTest() {
         val gson = Gson()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
-                CreateAccountResponseTest::class.java.getResource("/response/account/createAccountResponse.json").path))
-        val createAccountResponseAsJson = String(jsonAsBytes)
-        val createAccountResponseFromJson: Response<Account> = gson.fromJson(createAccountResponseAsJson,
-                createAccountResponseType)
-        val createAccountResponse: Response<Account> = GResponse.response(createAccountResponseAsJson, createAccountResponseType)
+                EditAccountInfoResponseTest::class.java.getResource("/response/account/editAccountInfoResponse.json").path))
+        val editAccountInfoResponseAsJson = String(jsonAsBytes)
+        val editAccountInfoResponseFromJson: Response<Account> = gson.fromJson(editAccountInfoResponseAsJson,
+                editAccountInfoResponseType)
+        val editAccountInfoResponse: Response<Account> = GResponse.response(editAccountInfoResponseAsJson, editAccountInfoResponseType)
 
-        assertEquals(createAccountResponseFromJson, createAccountResponse, "malformed createAccount response.")
+        assertEquals(editAccountInfoResponseFromJson, editAccountInfoResponse, "malformed editAccountInfo response.")
     }
 
 
     @Test
-    fun createAccountResponseSerialization() {
+    fun editAccountInfoResponseSerialization() {
         val gson = Gson()
-        val json = FileReader(CreateAccountResponseTest::class.java.getResource("/response/account/createAccountResponse.json").path)
-        val createAccountResponse = gson.toJson(gson.fromJson<Response<Account>>(json, createAccountResponseType))
-        val gCreateAccountResponse = Response(true, result = account)
+        val json = FileReader(EditAccountInfoResponseTest::class.java.getResource("/response/account/editAccountInfoResponse.json").path)
+        val editAccountInfoResponse = gson.toJson(gson.fromJson<Response<Account>>(json, editAccountInfoResponseType))
+        val gEditAccountInfoResponse = Response(true, result = account)
 
-        assertEquals(createAccountResponse, GResponse.response(gCreateAccountResponse), "malformed createAccount JSON.")
+        assertEquals(editAccountInfoResponse, GResponse.response(gEditAccountInfoResponse), "malformed editAccountInfo JSON.")
     }
 
 }

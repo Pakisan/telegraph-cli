@@ -32,41 +32,40 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertEquals
 
-class CreateAccountResponseTest {
+class RevokeAccessTokenResponseTest {
 
-    private val createAccountResponseType = object: TypeToken<Response<Account>>(){}.type
+    private val revokeAccessTokenResponseType = object: TypeToken<Response<Account>>(){}.type
 
     val account = Account(
             "Sandbox",
             "Anonymous",
             "",
             "ca90f944adb2b8f7f4f9d07c4cf6aae72af4461cc252cbcfad4a2d9aeabd",
-            "https://edit.telegra.ph/auth/XjB2sC7FZYSzFu3h61HigkGFqjNJLxpGR0HhDOVAKN",
-            0
+            pageCount = 0
     )
 
     @Test
-    fun createAccountResponseDeserializationTest() {
+    fun revokeAccessTokenResponseDeserializationTest() {
         val gson = Gson()
         val jsonAsBytes = Files.readAllBytes(Paths.get(
-                CreateAccountResponseTest::class.java.getResource("/response/account/createAccountResponse.json").path))
-        val createAccountResponseAsJson = String(jsonAsBytes)
-        val createAccountResponseFromJson: Response<Account> = gson.fromJson(createAccountResponseAsJson,
-                createAccountResponseType)
-        val createAccountResponse: Response<Account> = GResponse.response(createAccountResponseAsJson, createAccountResponseType)
+                RevokeAccessTokenResponseTest::class.java.getResource("/response/account/revokeAccessTokenResponse.json").path))
+        val revokeAccessTokenResponseAsJson = String(jsonAsBytes)
+        val revokeAccessTokenResponseFromJson: Response<Account> = gson.fromJson(revokeAccessTokenResponseAsJson,
+                revokeAccessTokenResponseType)
+        val revokeAccessTokenResponse: Response<Account> = GResponse.response(revokeAccessTokenResponseAsJson, revokeAccessTokenResponseType)
 
-        assertEquals(createAccountResponseFromJson, createAccountResponse, "malformed createAccount response.")
+        assertEquals(revokeAccessTokenResponseFromJson, revokeAccessTokenResponse, "malformed revokeAccessToken response.")
     }
 
 
     @Test
-    fun createAccountResponseSerialization() {
+    fun revokeAccessTokenResponseSerialization() {
         val gson = Gson()
-        val json = FileReader(CreateAccountResponseTest::class.java.getResource("/response/account/createAccountResponse.json").path)
-        val createAccountResponse = gson.toJson(gson.fromJson<Response<Account>>(json, createAccountResponseType))
-        val gCreateAccountResponse = Response(true, result = account)
+        val json = FileReader(RevokeAccessTokenResponseTest::class.java.getResource("/response/account/revokeAccessTokenResponse.json").path)
+        val revokeAccessTokenResponse = gson.toJson(gson.fromJson<Response<Account>>(json, revokeAccessTokenResponseType))
+        val gRevokeAccessTokenResponse = Response(true, result = account)
 
-        assertEquals(createAccountResponse, GResponse.response(gCreateAccountResponse), "malformed createAccount JSON.")
+        assertEquals(revokeAccessTokenResponse, GResponse.response(gRevokeAccessTokenResponse), "malformed revokeAccessToken JSON.")
     }
 
 }
