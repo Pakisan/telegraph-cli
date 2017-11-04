@@ -47,13 +47,13 @@ object Account {
      * Can be any link, not necessarily to a Telegram profile or channel.
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Account].
+     * @return [Response] with [Account].
      */
     @Synchronized
     fun createAccount(shortName: String, authorName: String = "", authorUrl: String = ""): Response<Account> {
         val response: HttpResponse<JsonNode> = Unirest.get(
                 Telegraph.createAccount(shortName, authorName, authorUrl)).asJson()
-        return GResponse.response<Account>(response.body.toString(),
+        return GResponse.response(response.body.toString(),
                 object: TypeToken<Response<Account>>(){}.type)
     }
 
@@ -68,14 +68,15 @@ object Account {
      * below the title. Can be any link, not necessarily to a Telegram profile or channel.
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Account].
+     * @return [Response] with [Account].
      */
     @Synchronized
     fun editAccountInfo(accessToken: String, shortName: String, authorName: String = "",
-                        authorUrl: String = ""): Account {
+                        authorUrl: String = ""): Response<Account> {
         val response: HttpResponse<JsonNode> = Unirest.get(
                 Telegraph.editAccountInfo(accessToken, shortName, authorName, authorUrl)).asJson()
-        return GAccount.account(response.body.toString())
+        return GResponse.response(response.body.toString(),
+                object: TypeToken<Response<Account>>(){}.type)
     }
 
     /**
@@ -87,13 +88,14 @@ object Account {
      *
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Account].
+     * @return [Response] with [Account].
      */
     @Synchronized
-    fun revokeAccessToken(accessToken: String): Account {
+    fun revokeAccessToken(accessToken: String): Response<Account> {
         val response: HttpResponse<JsonNode> = Unirest.get(
                 Telegraph.revokeAccessToken(accessToken)).asJson()
-        return GAccount.account(response.body.toString())
+        return GResponse.response(response.body.toString(),
+                object: TypeToken<Response<Account>>(){}.type)
     }
 
 }
