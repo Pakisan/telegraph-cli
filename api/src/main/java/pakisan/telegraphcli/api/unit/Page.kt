@@ -26,7 +26,6 @@ import com.mashape.unirest.http.HttpResponse
 import com.mashape.unirest.http.JsonNode
 import com.mashape.unirest.http.Unirest
 import pakisan.telegraphcli.data.gson.data.GResponse
-import pakisan.telegraphcli.data.gson.data.page.GPage
 import pakisan.telegraphcli.data.page.Page
 import pakisan.telegraphcli.data.response.Response
 import pakisan.telegraphcli.data.response.Result
