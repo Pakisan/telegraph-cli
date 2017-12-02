@@ -25,6 +25,7 @@ import com.google.gson.reflect.TypeToken
 import com.mashape.unirest.http.HttpResponse
 import com.mashape.unirest.http.JsonNode
 import com.mashape.unirest.http.Unirest
+import pakisan.telegraphcli.api.RequestResult
 import pakisan.telegraphcli.data.gson.data.GResponse
 import pakisan.telegraphcli.data.page.Page
 import pakisan.telegraphcli.data.response.Response
@@ -42,13 +43,17 @@ object Page {
      *
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Response] with [Page].
+     * @return [RequestResult] with [Page].
      */
     @Synchronized
-    fun getPage(path: String, returnContent: Boolean = false): Response<Page> {
-        val response: HttpResponse<JsonNode> = Unirest.get(
-                Telegraph.getPage(path, returnContent)).asJson()
-        return GResponse.response(response.body.toString(), object: TypeToken<Response<Page>>(){}.type)
+    fun getPage(path: String, returnContent: Boolean = false): RequestResult<Page> {
+        val endpoint = Telegraph.getPage(path, returnContent)
+        val response: HttpResponse<JsonNode> = Unirest.get(endpoint).asJson()
+        val responseContent: Response<Page> = GResponse.response(response.body.toString(),
+                object: TypeToken<Response<Page>>(){}.type)
+
+        return RequestResult(response.statusText, response.status, response.headers,
+                endpoint, responseContent)
     }
 
     /**
@@ -65,14 +70,20 @@ object Page {
      *
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Response] with [Page].
+     * @return [RequestResult] with [Page].
      */
     @Synchronized
     fun createPage(accessToken: String, title: String, authorName: String = "",
-                   authorUrl: String = "", content: String, returnContent: Boolean = false): Response<Page> {
-        val response: HttpResponse<JsonNode> = Unirest.get(
-                Telegraph.createPage(accessToken, title, authorName, authorUrl, content, returnContent)).asJson()
-        return GResponse.response(response.body.toString(), object: TypeToken<Response<Page>>(){}.type)
+                   authorUrl: String = "", content: String,
+                   returnContent: Boolean = false): RequestResult<Page> {
+        val endpoint = Telegraph.createPage(accessToken, title, authorName, authorUrl,
+                content, returnContent)
+        val response: HttpResponse<JsonNode> = Unirest.get(endpoint).asJson()
+        val responseContent: Response<Page> = GResponse.response(response.body.toString(),
+                object: TypeToken<Response<Page>>(){}.type)
+
+        return RequestResult(response.statusText, response.status, response.headers,
+                endpoint, responseContent)
     }
 
     /**
@@ -89,14 +100,20 @@ object Page {
      *
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Response] with [Page].
+     * @return [RequestResult] with [Page].
      */
     @Synchronized
     fun editPage(accessToken: String, path: String, title: String, content: String,
-                 authorName: String = "", authorUrl: String = "", returnContent: Boolean = false): Response<Page> {
-        val response: HttpResponse<JsonNode> = Unirest.get(
-                Telegraph.editPage(accessToken, path, title, authorName, authorUrl, content, returnContent)).asJson()
-        return GResponse.response(response.body.toString(), object: TypeToken<Response<Page>>(){}.type)
+                 authorName: String = "", authorUrl: String = "",
+                 returnContent: Boolean = false): RequestResult<Page> {
+        val endpoint = Telegraph.editPage(accessToken, path, title, authorName, authorUrl,
+                content, returnContent)
+        val response: HttpResponse<JsonNode> = Unirest.get(endpoint).asJson()
+        val responseContent: Response<Page> = GResponse.response(response.body.toString(),
+                object: TypeToken<Response<Page>>(){}.type)
+
+        return RequestResult(response.statusText, response.status, response.headers,
+                endpoint, responseContent)
     }
 
     /**
@@ -109,13 +126,17 @@ object Page {
      *
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Response] with [Result].
+     * @return [RequestResult] with [Result].
      */
     @Synchronized
-    fun getPageList(accessToken: String, offset: Int = 0, limit: Int = 50): Response<Result> {
-        val response: HttpResponse<JsonNode> = Unirest.get(
-                Telegraph.getPageList(accessToken, offset, limit)).asJson()
-        return GResponse.response(response.body.toString(), object: TypeToken<Response<Result>>(){}.type)
+    fun getPageList(accessToken: String, offset: Int = 0, limit: Int = 50): RequestResult<Result> {
+        val endpoint = Telegraph.getPageList(accessToken, offset, limit)
+        val response: HttpResponse<JsonNode> = Unirest.get(endpoint).asJson()
+        val responseContent: Response<Result> = GResponse.response(response.body.toString(),
+                object: TypeToken<Response<Result>>(){}.type)
+
+        return RequestResult(response.statusText, response.status, response.headers,
+                endpoint, responseContent)
     }
 
 }

@@ -25,8 +25,8 @@ import com.google.gson.reflect.TypeToken
 import com.mashape.unirest.http.HttpResponse
 import com.mashape.unirest.http.JsonNode
 import com.mashape.unirest.http.Unirest
+import pakisan.telegraphcli.api.RequestResult
 import pakisan.telegraphcli.data.Account
-import pakisan.telegraphcli.data.gson.data.GAccount
 import pakisan.telegraphcli.data.gson.data.GResponse
 import pakisan.telegraphcli.data.response.Response
 import pakisan.telegraphcli.requests.Telegraph
@@ -47,14 +47,18 @@ object Account {
      * Can be any link, not necessarily to a Telegram profile or channel.
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Response] with [Account].
+     * @return [RequestResult] with [Account].
      */
     @Synchronized
-    fun createAccount(shortName: String, authorName: String = "", authorUrl: String = ""): Response<Account> {
-        val response: HttpResponse<JsonNode> = Unirest.get(
-                Telegraph.createAccount(shortName, authorName, authorUrl)).asJson()
-        return GResponse.response(response.body.toString(),
+    fun createAccount(shortName: String, authorName: String = "",
+                      authorUrl: String = ""): RequestResult<Account> {
+        val endpoint = Telegraph.createAccount(shortName, authorName, authorUrl)
+        val response: HttpResponse<JsonNode> = Unirest.get(endpoint).asJson()
+        val responseContent: Response<Account> = GResponse.response(response.body.toString(),
                 object: TypeToken<Response<Account>>(){}.type)
+
+        return RequestResult(response.statusText, response.status, response.headers,
+                endpoint, responseContent)
     }
 
     /**
@@ -68,15 +72,18 @@ object Account {
      * below the title. Can be any link, not necessarily to a Telegram profile or channel.
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Response] with [Account].
+     * @return [RequestResult] with [Account].
      */
     @Synchronized
     fun editAccountInfo(accessToken: String, shortName: String, authorName: String = "",
-                        authorUrl: String = ""): Response<Account> {
-        val response: HttpResponse<JsonNode> = Unirest.get(
-                Telegraph.editAccountInfo(accessToken, shortName, authorName, authorUrl)).asJson()
-        return GResponse.response(response.body.toString(),
+                        authorUrl: String = ""): RequestResult<Account> {
+        val endpoint = Telegraph.editAccountInfo(accessToken, shortName, authorName, authorUrl)
+        val response: HttpResponse<JsonNode> = Unirest.get(endpoint).asJson()
+        val responseContent: Response<Account> = GResponse.response(response.body.toString(),
                 object: TypeToken<Response<Account>>(){}.type)
+
+        return RequestResult(response.statusText, response.status, response.headers,
+                endpoint, responseContent)
     }
 
     /**
@@ -88,14 +95,17 @@ object Account {
      *
      * @throws IllegalArgumentException in case when fields are incorrect.
      *
-     * @return [Response] with [Account].
+     * @return [RequestResult] with [Account].
      */
     @Synchronized
-    fun revokeAccessToken(accessToken: String): Response<Account> {
-        val response: HttpResponse<JsonNode> = Unirest.get(
-                Telegraph.revokeAccessToken(accessToken)).asJson()
-        return GResponse.response(response.body.toString(),
+    fun revokeAccessToken(accessToken: String): RequestResult<Account> {
+        val endpoint = Telegraph.revokeAccessToken(accessToken)
+        val response: HttpResponse<JsonNode> = Unirest.get(endpoint).asJson()
+        val responseContent: Response<Account> = GResponse.response(response.body.toString(),
                 object: TypeToken<Response<Account>>(){}.type)
+
+        return RequestResult(response.statusText, response.status, response.headers,
+                endpoint, responseContent)
     }
 
 }
