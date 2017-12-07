@@ -22,38 +22,35 @@
 package pakisan.telegraphcli.data.gson
 
 import com.google.gson.*
+import com.google.gson.reflect.TypeToken
 import pakisan.telegraphcli.data.page.node.Node
 import pakisan.telegraphcli.data.page.node.NodeElement
 import pakisan.telegraphcli.data.page.node.Text
 import java.lang.reflect.Type
 
 /**
- * Serialize telegra.ph [pakisan.telegraphcli.data.page.Page] into
- * [Node] with String or [NodeElement] value json.
+ * Deserialize telegra.ph [pakisan.telegraphcli.data.page.Page] into
+ * [Node] with String or [NodeElement] value.
  */
-class NodeSerializer : JsonSerializer<Node> {
+class NodeListDeserializer : JsonDeserializer<List<Node>> {
+    override fun deserialize(json: JsonElement?, typeOfT: Type?,
+                             context: JsonDeserializationContext?): List<Node>? {
+        return when(json) {
+            is JsonArray -> {
+                val nodeTypeToken = object : TypeToken<Node>(){}.type
+                val nodes: MutableList<Node> = mutableListOf()
+                val jsonArrayOfNodes = json.asJsonArray
 
-    override fun serialize(node: Node?, typeOfSrc: Type?,
-                           context: JsonSerializationContext?): JsonElement? {
-        if(node != null) {
-            when(node.value) {
-                is Text -> {
-                    return JsonPrimitive(node.value.text)
+                jsonArrayOfNodes.forEach {
+                    val node: Node = context!!.deserialize(it, nodeTypeToken)
+                    nodes.add(node)
                 }
-                is NodeElement -> {
-                    val jsonObject = JsonObject()
-                    jsonObject.add("tag", JsonPrimitive(node.value.tag))
-                    jsonObject.add("attrs", context!!.serialize(node.value.attrs))
-                    jsonObject.add("children", context.serialize(node.value.children))
 
-                    return jsonObject
-                }
-                else -> {
-                    return null
-                }
+                nodes
             }
-        } else {
-            return null
+            else -> {
+                emptyList()
+            }
         }
     }
 }

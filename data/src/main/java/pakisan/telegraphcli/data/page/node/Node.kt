@@ -25,39 +25,4 @@ package pakisan.telegraphcli.data.page.node
  * This abstract object represents a DOM Node. It can be a String which represents a DOM text
  * node or a NodeElement object.
  */
-data class Node (
-        val value: Any
-) {
-
-//    override fun hashCode(): Int {
-//        return if(this.value is String) {
-//            this.value.hashCode()
-//        } else {
-//            (this.value as NodeElement).hashCode()
-//        }
-//    }
-//
-//    override fun equals(other: Any?): Boolean {
-//        if(other == null) {
-//            return false
-//        }
-//
-//        if(other !is Node) {
-//            return false
-//        }
-//
-//        if(this.value is String && other.value is String) {
-//            return this.value == other.value
-//        }
-//
-//        if (this.value is NodeElement && other.value is NodeElement) {
-//            return this.value == other.value
-//        }
-//
-//        return false
-//    }
-//
-//    override fun toString(): String {
-//        return this.value.toString()
-//    }
-}
+data class Node (val value: NodeValue)

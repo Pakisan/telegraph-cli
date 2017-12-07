@@ -30,6 +30,7 @@ import pakisan.telegraphcli.data.gson.data.GResponse
 import pakisan.telegraphcli.data.page.Page
 import pakisan.telegraphcli.data.page.node.Node
 import pakisan.telegraphcli.data.page.node.NodeElement
+import pakisan.telegraphcli.data.page.node.Text
 import pakisan.telegraphcli.data.response.Response
 import java.io.FileReader
 import java.nio.file.Files
@@ -49,7 +50,7 @@ class GetPageResponseTest {
             content = listOf(
                     Node(NodeElement(
                             "p",
-                            children = listOf(Node("Hello, world!"))
+                            children = listOf(Node(Text("Hello, world!")))
                     ))
             ),
             views = 501,

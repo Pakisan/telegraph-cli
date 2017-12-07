@@ -21,6 +21,8 @@
 
 package pakisan.telegraphcli.data.page.node
 
+sealed class NodeValue
+
 /**
  * This object represents a DOM element node.
  *
@@ -34,4 +36,6 @@ data class NodeElement(
         val tag: String,
         val attrs: Map<String, String>? = null,
         val children: List<Node>? = null
-)
+) : NodeValue()
+
+data class Text(val text: String) : NodeValue()

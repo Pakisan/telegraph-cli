@@ -30,6 +30,7 @@ import pakisan.telegraphcli.data.gson.NodeSerializer
 import pakisan.telegraphcli.data.gson.data.page.node.GNodeElement
 import pakisan.telegraphcli.data.page.node.Node
 import pakisan.telegraphcli.data.page.node.NodeElement
+import pakisan.telegraphcli.data.page.node.Text
 import java.io.FileReader
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -46,7 +47,7 @@ class NodeElementTest {
         nodeElement = NodeElement(
                 "p",
                 children = listOf(
-                        Node("text content"),
+                        Node(Text("text content")),
                         Node(NodeElement(
                                 "a",
                                 mapOf(
@@ -54,7 +55,7 @@ class NodeElementTest {
                                         Pair("target", "_blank")
                                 ),
                                 listOf(
-                                        Node("https://m.habrahabr.ru/post/335876/")
+                                        Node(Text("https://m.habrahabr.ru/post/335876/"))
                                 )
                         ))
                 )

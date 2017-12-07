@@ -25,6 +25,7 @@ import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import pakisan.telegraphcli.data.page.node.Node
 import pakisan.telegraphcli.data.page.node.NodeElement
+import pakisan.telegraphcli.data.page.node.Text
 import java.lang.reflect.Type
 
 /**
@@ -35,7 +36,7 @@ class NodeDeserializer : JsonDeserializer<Node> {
     override fun deserialize(json: JsonElement?, typeOfT: Type?,
                              context: JsonDeserializationContext?): Node? {
         return when(json) {
-            is JsonPrimitive -> Node(json.asString)
+            is JsonPrimitive -> Node(Text(json.asString))
             is JsonObject -> {
                 val map = object: TypeToken<Map<String, String>>(){}.type
                 val list = object: TypeToken<List<Node>>(){}.type

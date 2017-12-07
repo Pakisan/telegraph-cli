@@ -22,7 +22,9 @@
 package pakisan.telegraphcli.data.gson.data.page.node
 
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import pakisan.telegraphcli.data.gson.NodeDeserializer
+import pakisan.telegraphcli.data.gson.NodeListDeserializer
 import pakisan.telegraphcli.data.gson.NodeSerializer
 import pakisan.telegraphcli.data.page.node.Node
 
@@ -31,13 +33,16 @@ import pakisan.telegraphcli.data.page.node.Node
  */
 object GNode {
 
+    private val listOfNodes = object: TypeToken<List<Node>>(){}.type
     private val gson = GsonBuilder()
             .registerTypeAdapter(Node::class.java, NodeDeserializer())
             .registerTypeAdapter(Node::class.java, NodeSerializer())
+            .registerTypeAdapter(listOfNodes, NodeListDeserializer())
             .create()
     private val prettyGson = GsonBuilder()
             .registerTypeAdapter(Node::class.java, NodeDeserializer())
             .registerTypeAdapter(Node::class.java, NodeSerializer())
+            .registerTypeAdapter(listOfNodes, NodeListDeserializer())
             .setPrettyPrinting()
             .create()
 
@@ -67,6 +72,34 @@ object GNode {
         } else {
             gson.toJson(node, Node::class.java)
         }
+    }
+
+    /**
+     * Serialize [Node] to JSON.
+     *
+     * @param nodes [Node] to serialize to JSON.
+     * @return [Node] as JSON.
+     * @throws [com.google.gson.JsonSyntaxException] in case when JSON was malformed.
+     */
+    @Synchronized
+    fun nodes(nodes: List<Node>, pretty: Boolean = false): String {
+        return if(pretty) {
+            prettyGson.toJson(nodes, listOfNodes)
+        } else {
+            gson.toJson(nodes, listOfNodes)
+        }
+    }
+
+    /**
+     * Deserialize [Node] from JSON.
+     *
+     * @param json [Node] as JSON.
+     * @return [Node]
+     * @throws [com.google.gson.JsonSyntaxException] in case when JSON was malformed.
+     */
+    @Synchronized
+    fun nodes(json: String): List<Node> {
+        return gson.fromJson(json, listOfNodes)
     }
 
 }
